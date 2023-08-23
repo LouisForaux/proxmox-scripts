@@ -34,7 +34,7 @@ function error {
 _raw_base="https://raw.githubusercontent.com/ej52/proxmox-scripts/main/lxc/nginx-proxy-manager"
 # Operating system
 _os_type=alpine
-_os_version=3.18
+_os_version=3.16
 # System architecture
 _arch=$(dpkg --print-architecture)
 
@@ -131,7 +131,8 @@ info "Updating LXC template list..."
 pveam update &>/dev/null
 
 info "Downloading LXC template..."
-mapfile -t _templates < <(pveam available -section system | sed -n "s/.*\($_os_type-$_os_version.*\)/\1/p" | sort -t - -k 2 -V)
+#mapfile -t _templates < <(pveam available -section system | sed -n "s/.*\($_os_type-$_os_version.*\)/\1/p" | sort -t - -k 2 -V)
+mapfile -t _templates < echo "alpine-3.16-default_20220622_amd64.tar.xz"
 [ ${#_templates[@]} -eq 0 ] \
   && error "No LXC template found for $_os_type-$_os_version"
 
